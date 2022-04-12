@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import { Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Route, Routes, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./Chart";
 import Price from "./Price";
@@ -50,6 +51,27 @@ const Description = styled.p`
   margin: 20px 0px;
 `;
 
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
+  }
+`;
 interface RouteParams {
   coinId: string;
 }
@@ -120,6 +142,8 @@ function Coin() {
   const state = location.state as RouteState;
   const [info, setInfo] = useState<InfoData>();
   const [priceInfo, setPriceInfo] = useState<PriceData>();
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
 
   useEffect(() => {
     (async () => {
@@ -169,9 +193,18 @@ function Coin() {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
           <Routes>
-            <Route path={`/${coinId}/price`} element={<Price />} />
-            <Route path={`/${coinId}/chart`} element={<Chart />} />
+            <Route path={`/:coinId/price`} element={<Price />} />
+            <Route path={`/:coinId/chart`} element={<Chart />} />
           </Routes>
         </>
       )}
