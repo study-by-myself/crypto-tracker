@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -200,8 +199,8 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path={`/:coinId/price`} element={<Price />} />
-            <Route path={`/:coinId/chart`} element={<Chart />} />
+            <Route path={`price`} element={<Price />} />
+            <Route path={`chart`} element={<Chart coinId={coinId!} />} />
           </Routes>
         </>
       )}
