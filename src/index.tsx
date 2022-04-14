@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -8,16 +8,16 @@ import { theme } from "./theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
+const rootNode = document.getElementById("root");
 
-ReactDOM.render(
+ReactDOM.createRoot(rootNode!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
     </QueryClientProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
