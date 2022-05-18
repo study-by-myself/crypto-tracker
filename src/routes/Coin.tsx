@@ -75,6 +75,7 @@ const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
+
 interface RouteParams {
   coinId: string;
 }
@@ -202,7 +203,12 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path={`price`} element={<Price />} />
+            <Route
+              path={`price`}
+              element={
+                <Price price={tickersData?.quotes.USD.price.toFixed(3)} />
+              }
+            />
             <Route path={`chart`} element={<Chart coinId={coinId!} />} />
           </Routes>
         </>
