@@ -18,45 +18,6 @@ interface IHistorical {
   market_cap: number;
 }
 
-//const options: ApexOptions = (data: IHistorical[]) => ({
-//  theme: {
-//    mode: "dark",
-//  },
-//  chart: {
-//    height: 300,
-//    width: 500,
-//    toolbar: {
-//      show: false,
-//    },
-//    background: "transparent",
-//  },
-//  grid: { show: false },
-//  stroke: {
-//    curve: "smooth",
-//    width: 4,
-//  },
-//  yaxis: {
-//    show: false,
-//  },
-//  xaxis: {
-//    axisBorder: { show: false },
-//    axisTicks: { show: false },
-//    labels: { show: false },
-//    type: "datetime",
-//    categories: data?.map((price: IHistorical) => price.time_close),
-//  },
-//  fill: {
-//    type: "gradient",
-//    gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-//  },
-//  colors: ["#0fbcf9"],
-//  tooltip: {
-//    y: {
-//      formatter: (value: number) => `$${value.toFixed(2)}`,
-//    },
-//  },
-//});
-
 function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
@@ -76,7 +37,7 @@ function Chart({ coinId }: ChartProps) {
           series={[
             {
               name: "Price",
-              data: data?.map((price) => price.close) as number[],
+              data: data?.map((price) => price.close) ?? [],
             },
           ]}
           options={{
